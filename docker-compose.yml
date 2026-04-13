@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  \dt:
+    image: postgis/postgis:15-3.3
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: energy2020
+      POSTGRES_USER: energy
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
