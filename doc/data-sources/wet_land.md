@@ -5,7 +5,7 @@ This document outlines the ingestion process for environmental protection data, 
 ## 1. Data Source & Context
 The pipeline consumes data from the **National Wetlands Inventory (NWI)**, managed by the **U.S. Fish and Wildlife Service (USFWS)**. This is the authoritative national dataset for the characteristics, extent, and status of U.S. wetlands.
 
-* **Live Map View:** [USFWS Wetlands Mapper](https://www.fws.gov/program/national-wetlands-inventory/wetlands-mapper)
+* **Live Map View:** [USFWS Wetlands Mapper](https://fwsprimary.wim.usgs.gov/wetlands/apps/wetlands-mapper/)
 * **Data Format:** ESRI File Geodatabase (.gdb)
 * **Source Identifier:** `NWI`
 
