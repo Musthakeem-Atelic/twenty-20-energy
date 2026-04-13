@@ -5,7 +5,7 @@ This document details the automated ETL (Extract, Transform, Load) process for i
 ## 1. Data Source & Live Connectivity
 The pipeline connects directly to the **U.S. Energy Information Administration (EIA)** via the Department of Transportation (DOT) ArcGIS Feature Server. This provides the most current national view of natural gas interstate and intrastate transmission pipelines.
 
-* **Live Source:** [EIA Natural Gas Pipelines - ArcGIS Feature Server](https://geo.dot.gov/server/rest/services/Hosted/Natural_Gas_Pipelines_US_EIA/FeatureServer/0)
+* **Live Source:** [EIA Natural Gas Pipelines - ArcGIS Feature Server](https://www.arcgis.com/apps/mapviewer/index.html?url=https://geo.dot.gov/server/rest/services/Hosted/Natural_Gas_Pipelines_US_EIA/FeatureServer/0&source=sd)
 * **Data Type:** MultiLineString (Vector spatial data).
 * **Source Identifier:** `EIA`
 
