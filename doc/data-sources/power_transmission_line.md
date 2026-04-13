@@ -25,7 +25,8 @@ To maintain a high-performance database, we do not store the entire U.S. grid. W
 ### **Phase 3: Data Integrity & Cleaning**
 Before moving to storage, the data undergoes several validation checks:
 * **Geometry Validation:** Any "ghost features" (records with empty or null geometries) are purged to prevent rendering errors on the frontend.
-* **Unit Normalization:** Voltages are converted to floats, and specific placeholder values (like `-999999`) are converted to `null` to prevent skewed data analysis.
+* **Unit Normalization:** * **Voltage:** Measured and stored in **kV (Kilovolts)**.
+    * **Null Handling:** Specific placeholder values (like `-999999`) are converted to `null` to prevent skewed data analysis.
 * **Column Mapping:** Raw HIFLD attributes (e.g., `SUB_1`, `VOLT_CLASS`) are mapped to our standardized internal schema.
 
 ---
@@ -33,20 +34,22 @@ Before moving to storage, the data undergoes several validation checks:
 ## 3. Data Schema & Content
 The final database records provide a comprehensive technical profile of the local grid infrastructure.
 
-| Category | Attributes Captured |
-| :--- | :--- |
-| **Identification** | Unique Line ID, Source (HIFLD), State ISO, State Name |
-| **Technical** | Operating Voltage (kV), Voltage Class, Inferred Status |
-| **Operational** | Owner/Utility Name, Operational Status (e.g., In Service) |
-| **Connectivity** | Associated Substation 1, Associated Substation 2 |
-| **Metadata** | 100% of original source attributes preserved in a **JSONB** blob |
+| Category | Attributes Captured | Details & Units |
+| :--- | :--- | :--- |
+| **Identification** | Unique Line ID, Source (HIFLD), State ISO, State Name | Primary keys for indexing. |
+| **Technical** | Operating Voltage (**kV**) | Numerical capacity of the line. |
+| **Technical** | Voltage Class | Categorical grouping (e.g., 100-161kV). |
+| **Operational** | Owner/Utility Name | Entity responsible (e.g., Georgia Power). |
+| **Operational** | Operational Status | Current state (In Service, Proposed, Retired). |
+| **Connectivity** | Associated Substation 1 & 2 | Connecting points for the circuit. |
+| **Metadata** | `raw_metadata` (JSONB) | 100% of original source data preserved. |
 
 ---
 
 ## 4. Storage & Synchronization Strategy
 To ensure the database remains a "Single Source of Truth" without stale data:
 
-1.  **Atomic Deletion:** The pipeline identifies all existing records in the `electricity_transmission_line` table where the source is marked as `HIFLD` and deletes them.
+1.  **Atomic Deletion:** The pipeline identifies all existing records in the `electricity_transmission_line` table where the source is marked as `HIFLD` and deletes them before re-insertion.
 2.  **PostGIS Integration:** Geometries are converted to **EWKT (Extended Well-Known Text)** and inserted using the `ST_GeomFromEWKT` function with **SRID 4326**.
 3.  **Batch Processing:** Data is inserted in batches of 100. This minimizes database overhead and ensures high-speed ingestion even for large datasets.
 
@@ -54,6 +57,6 @@ To ensure the database remains a "Single Source of Truth" without stale data:
 
 ## 5. Value for Land Selection
 By processing the transmission lines this way, our platform can instantly answer critical land-use questions:
-* **How far is this parcel from the nearest high-voltage line?**
-* **Who owns the power infrastructure in this county?**
-* **What is the voltage capacity available for this specific property?**
+* **Proximity:** Distance from the land parcel to the nearest high-voltage line.
+* **Capacity:** The voltage capacity (**kV**) available for heavy industrial or solar interconnection.
+* **Utility Provider:** Identification of the utility owner to facilitate easement or connection inquiries.
