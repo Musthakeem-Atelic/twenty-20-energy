@@ -5,7 +5,7 @@ This document outlines the automated ETL (Extract, Transform, Load) process for 
 ## 1. Data Source & Live Connectivity
 We leverage the **HIFLD (Homeland Infrastructure Foundation-Level Data)** "Electric Power Transmission Lines" dataset. This is the primary federal source for open-source grid infrastructure data.
 
-* **Live Map Explorer:** [HIFLD Electric Power Transmission Lines](https://hifld-geoplatform.opendata.arcgis.com/datasets/geoplatform::electric-power-transmission-lines/explore)
+* **Live Map Explorer:** [HIFLD Electric Power Transmission Lines](https://www.arcgis.com/apps/mapviewer/index.html?layers=d4090758322c4d32a4cd002ffaa0aa12)
 * **Data Type:** Vector LineString (Geographic Information System data).
 
 ---
