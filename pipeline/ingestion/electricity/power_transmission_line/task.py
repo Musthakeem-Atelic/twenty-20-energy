@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from sqlalchemy import text
 from pipeline.ingestion.electricity.power_transmission_line.fetch import fetch_electricity_lines
-from pipeline.ingestion.gas.gas_pipeline.clean import filter_states          # reuse existing filter
+from pipeline.ingestion.electricity.power_transmission_line.clean import filter_states          # reuse existing filter
 from shared.database import engine, Base
 from shared.models.electricity_transmission_line import ElectricityTransmissionLine
 
